@@ -25,7 +25,7 @@ public class DataExtensionController {
     value = "/updateMappingTable",
     consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity updateMappingTable(@RequestBody LineUser lineUser) {
-        HttpStatus statusCode = dataExtensionService.updateMappingTable(lineUser);
+        HttpStatus statusCode = dataExtensionService.updateLineIdMappingTable(lineUser);
         return ResponseEntity.status(statusCode).build();
     }
 

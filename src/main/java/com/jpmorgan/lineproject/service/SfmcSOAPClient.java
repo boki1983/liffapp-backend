@@ -28,7 +28,7 @@ public class SfmcSOAPClient extends WebServiceGatewaySupport {
         setMessageSender(new ClientHttpRequestMessageSender(simpleClientHttpRequestFactory));
     }
 
-    public DataExtensionObject getCustomerMappingTableDataFromDataExtension(String uuid) {
+    public DataExtensionObject getCustomerMappingTableDataRowFromDataExtension(String uuid) {
         RetrieveRequest retrieveRequest = new RetrieveRequest();
 
         // Data Extension CustomerKey

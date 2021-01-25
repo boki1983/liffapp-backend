@@ -4,5 +4,5 @@ import com.jpmorgan.lineproject.form.LineUser;
 import org.springframework.http.HttpStatus;
 
 public interface DataExtensionService {
-    HttpStatus updateMappingTable(LineUser lineUser);
+    HttpStatus updateLineIdMappingTable(LineUser lineUser);
 }

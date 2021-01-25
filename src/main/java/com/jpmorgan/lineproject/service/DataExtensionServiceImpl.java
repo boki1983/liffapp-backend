@@ -30,11 +30,14 @@ public class DataExtensionServiceImpl implements DataExtensionService {
     private RestTemplate restTemplate;
 
     @Override
-    public HttpStatus updateMappingTable(LineUser lineUser) {
-        String lineUserId = getLineUserID(lineUser);
-        lineUser.setLineUserId(lineUserId);
+    public HttpStatus updateLineIdMappingTable(LineUser lineUser) {
+        String lineUserId = lineUser.getLineUserId();
+        if (StringUtils.isEmpty(lineUserId)) {
+            lineUserId = getLineUserID(lineUser);
+            lineUser.setLineUserId(lineUserId);
+        }
 
-        DataExtensionObject dataExtensionObject = getCustomerMappingTableData(lineUser.getUuid());
+        DataExtensionObject dataExtensionObject = getCustomerMappingTableDataRow(lineUser.getUuid());
 
         if (dataExtensionObject == null) {
             return HttpStatus.NOT_FOUND;
@@ -48,7 +51,7 @@ public class DataExtensionServiceImpl implements DataExtensionService {
                 }
             }
 
-            return "OK".equalsIgnoreCase(updateCustomerMappingTableData(lineUser)) ?
+            return "OK".equalsIgnoreCase(updateCustomerLineIdMappingTable(lineUser)) ?
                     HttpStatus.OK : HttpStatus.NO_CONTENT;
         }
     }
@@ -77,14 +80,14 @@ public class DataExtensionServiceImpl implements DataExtensionService {
         return "";
     }
 
-    private String updateCustomerMappingTableData(LineUser lineUser) {
+    private String updateCustomerLineIdMappingTable(LineUser lineUser) {
         SfmcSOAPClient sfmcSOAPClient = returnSoapClient(BusinessUnit.TAIWAN_DIRECT);
         return sfmcSOAPClient.updateCustomerMappingTableDataToDataExtension(lineUser);
     }
 
-    private DataExtensionObject getCustomerMappingTableData(String uuid) {
+    private DataExtensionObject getCustomerMappingTableDataRow(String uuid) {
         SfmcSOAPClient sfmcSOAPClient = returnSoapClient(BusinessUnit.TAIWAN_DIRECT);
-        DataExtensionObject dataExtensionObject = sfmcSOAPClient.getCustomerMappingTableDataFromDataExtension(uuid);
+        DataExtensionObject dataExtensionObject = sfmcSOAPClient.getCustomerMappingTableDataRowFromDataExtension(uuid);
         System.out.println(dataExtensionObject);
         return dataExtensionObject;
     }
